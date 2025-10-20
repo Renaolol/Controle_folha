@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checklist Mensal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+    body {
+        background-color: #1c1c1c; /* preto/chumbo escuro */
+        color: #fdf6d8; /* amarelo claro para o texto */
+    }
+
+    h2 {
+        color: #ffcc00; /* amarelo ouro */
+        border-bottom: 2px solid #ffcc00;
+        padding-bottom: 0.5rem;
+    }
+
+    .form-label, .form-select, .form-control {
+        color: #fdf6d8;
+        background-color: #707070;
+        border-color: #444;
+    }
+
+    .form-select:focus,
+    .form-control:focus {
+        border-color: #ffcc00;
+        box-shadow: 0 0 0 0.25rem rgba(255, 204, 0, 0.25);
+    }
+
+    .btn-primary {
+        background-color: #ffcc00;
+        border-color: #e6b800;
+        color: #1c1c1c;
+    }
+
+    .btn-primary:hover {
+        background-color: #e6b800;
+        border-color: #cc9900;
+        color: #1c1c1c;
+    }
+
+    .btn-outline-secondary {
+        color: #ffcc00;
+        border-color: #ffcc00;
+    }
+
+    .btn-outline-secondary:hover {
+        background-color: #ffcc00;
+        color: #1c1c1c;
+    }
+
+    select, input[type="text"] {
+        color-scheme: dark;
+    }
+
+    a {
+        display: inline-block;
+        margin-bottom: 0.5rem;
+    }
+
+    .side-panel {
+        background-color: #2a2a2a;
+        border: 1px solid #444;
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        max-height: calc(100vh - 6rem);
+        overflow-y: auto;
+    }
+
+    .side-panel h3,
+    .side-panel h4 {
+        color: #ffcc00;
+        margin-top: 1.5rem;
+    }
+
+    .side-panel h3:first-child {
+        margin-top: 0;
+    }
+
+    .side-panel ol {
+        padding-left: 1.25rem;
+    }
+
+    .side-panel li + li {
+        margin-top: 0.35rem;
+    }
+</style>
+
+</head>
+<body class="container mt-5">
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <h2>Checklist Mensal</h2>
+            <a href="{{ url_for('admin_operacoes') }}" class="btn btn-outline-secondary mt-3">Gerenciar Opera&ccedil;&otilde;es</a>
+            <a href="{{ url_for('vincular_operacoes') }}" class="btn btn-outline-secondary mt-2">Vincular Empresas &agrave;s Opera&ccedil;&otilde;es</a>
+            <form method="post">
+                <div class="mb-3">
+                    <label for="empresa" class="form-label">Empresa</label>
+                    <select name="empresa" class="form-select" required>
+                        {% for emp in empresas %}
+                            <option value="{{ emp[0] }}">{{ emp[1] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="competencia" class="form-label">Compet&ecirc;ncia (MM-AAAA)</label>
+                    <input type="text" name="competencia" class="form-control" required placeholder="Ex: 07-2025">
+                </div>
+                <button type="submit" class="btn btn-primary">Carregar Checklist</button>
+            </form>
+        </div>
+        <div class="col-lg-5">
+            <aside class="side-panel">
+                <h3>Folhas Fazer Final do M&Ecirc;s</h3>
+                <ol>
+                    <li>KATHERINE SCHERER CLARINDA (FAZER TUDO)</li>
+                    <li>GCONT</li>
+                    <li>BERND ECKARD KOELLN (FAZER TUDO)</li>
+                    <li>SIEGFRIED KOELLN &ndash; DOMESTICA (FAZER TUDO)</li>
+                    <li>SIEGFRIED KOELLN (FAZER TUDO)</li>
+                    <li>LOJA DA GISELA LTDA ENTREGAR</li>
+                    <li>ERICH RAMMINGER (FAZER TUDO) ENTREGAR</li>
+                    <li>GISELA DREGER (FAZER TUDO) ENTREGAR</li>
+                    <li>HELLA BADER (FAZER TUDO) ENTREGAR</li>
+                    <li>ALP COMERCIO E SERVICOS DE INFORMATICA LTDA</li>
+                    <li>MILLENNIUM COM&Eacute;RCIO E SERVICOS DE INFORMATICA LTDA</li>
+                    <li>GUSTAVO BORNHOLDT (FAZER TUDO)</li>
+                    <li>IGREJA BATISTA DE MONDAI</li>
+                    <li>INGRID DEISS (FAZER TUDO)</li>
+                    <li>KMANOS ADMINISTRADORA DE BENS LTDA</li>
+                    <li>VILARI ADMINISTRADORA DE BENS LTDA</li>
+                </ol>
+                <h3>Fazer Logo In&iacute;cio do M&Ecirc;s</h3>
+                <ol>
+                    <li>CTM - COOPERATIVA DE TRANSPORTADORES DE MONDAI</li>
+                    <li>MARISA KLEIN FURLANETTO</li>
+                    <li>APAE</li>
+                    <li>TRANSPORTES DIZA LTDA</li>
+                    <li>BAIERLE &amp; BAIERLE LTDA</li>
+                    <li>CENTRO ARTUR DEISS</li>
+                    <li>CLINICA BORNHOLDT</li>
+                    <li>FUNERARIA S&Atilde;O JO&Atilde;O</li>
+                    <li>GOLD MACHINE</li>
+                    <li>MAIZA C. BRUCH ORSO LTDA</li>
+                    <li>MW</li>
+                    <li>OHLAND</li>
+                    <li>MECPESA</li>
+                    <li>ORESTES</li>
+                    <li>P2 PRE FABRICADOS LTDA</li>
+                    <li>REI DOS LANCHES</li>
+                    <li>RODI</li>
+                    <li>TR ENXOVAIS</li>
+                    <li>WOLF &amp; WOLF</li>
+                    <li>YES MODAS</li>
+                    <li>ELETRICA REBOFER</li>
+                    <li>NAIR DE MOURA ENTREGAR</li>
+                    <li>LANCHINETE CREMAR ENTREGAR</li>
+                </ol>
+                <h3>Prioridade Ap&oacute;s Conclus&atilde;o EFDREINF - Guias</h3>
+                <ol>
+                    <li>KMANOS ADMINISTRADORA DE BENS LTDA</li>
+                    <li>VILARI ADMINISTRADORA DE BENS LTDA</li>
+                    <li>DECKERT TRANSPORTES LTDA</li>
+                    <li>MARCON SERVICOS VETERINARIOS LTDA</li>
+                    <li>TRANSPORTES BARBIAN LTDA</li>
+                    <li>FMS s&oacute; prolabore</li>
+                    <li>ALBRECHT s&oacute; prolabore</li>
+                    <li>winck</li>
+                </ol>
+                <h4>Para Entregar</h4>
+                <ol start="9">
+                    <li>LOJA DA GISELA</li>
+                    <li>CRISTIANI LUCIA RIEGEL ORSO LTDA</li>
+                    <li>IZABEL FACCHI HAGER</li>
+                    <li>NAIR DE MOURA</li>
+                    <li>PIKI</li>
+                    <li>OFICINA URUGUAI</li>
+                    <li>LANCHONETE CREMAR</li>
+                    <li>ADELAR LAIRTON BEHLING</li>
+                    <li>FLAVIO NERI DE SOUZA</li>
+                    <li>JB INDUSTRIA E COMERCIO</li>
+                    <li>JURACI RIGO (QUANDO TEM FUNRURAL)</li>
+                    <li>MARISA KLEIN FURLANETTO</li>
+                    <li>NRH FLORICULTURA</li>
+                </ol>
+            </aside>
+        </div>
+    </div>
+</body>
+</html>
