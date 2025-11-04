@@ -5,7 +5,6 @@ from psycopg2.extras import RealDictCursor
 # Conexão com banco da Domínio via ODBC
 def get_odbc_conn():
     return pyodbc.connect("DSN=ContabilPBI;UID=PBI;PWD=Pbi")
-
 # Conexão com PostgreSQL
 def get_pg_conn():
     return psycopg2.connect(
@@ -174,7 +173,6 @@ def salvar_checklist(cod_emp, competencia, dados):
     conn.commit()
     conn.close()
 
-
 def get_operacoes():
     conn = get_pg_conn()
     cursor = conn.cursor(cursor_factory=RealDictCursor)
@@ -227,6 +225,7 @@ def salvar_vinculos(cod_emp, lista_operacoes):
 
     conn.commit()
     conn.close()
+
 def get_operacao_por_codigo(codigo_operacao):
     conn = get_pg_conn()
     cursor = conn.cursor(cursor_factory=RealDictCursor)
