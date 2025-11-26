@@ -12,7 +12,7 @@ def index():
     return render_template("index.html", empresas=empresas)
 
 # @app.route("/checklist/<cod_emp>/<competencia>", methods=["GET", "POST"])
-# def checklist(cod_emp, competencia):
+# def checklist(cod_emp, competencia): 
 #     if request.method == "POST":
 #         dados = request.form.to_dict(flat=False)
 #         salvar_checklist(cod_emp, competencia, dados)
