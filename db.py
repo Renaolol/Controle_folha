@@ -76,7 +76,12 @@ def get_checklist(cod_emp, competencia):
                     (cod_emp, competencia_fmt)
                 )
                 observacao = f"R$ {val:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
-
+            if cod == 50:
+                val = get_val(
+                    "SELECT total_guia FROM bethadba.foguiainss WHERE codi_emp = ? AND competencia = ? AND tipo_process = 52",
+                    (cod_emp, competencia_fmt)
+                )
+                observacao = f"R$ {val:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
             elif cod == 11:
                 val = get_val(
                     "SELECT valor FROM bethadba.focalcirrf WHERE codi_emp = ? AND periodo_inicio = ?",
