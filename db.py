@@ -72,7 +72,7 @@ def get_checklist(cod_emp, competencia):
 
             if cod == 10:
                 val = get_val(
-                    "SELECT total_guia FROM bethadba.foguiainss WHERE codi_emp = ? AND competencia = ?",
+                    "SELECT total_guia FROM bethadba.foguiainss WHERE codi_emp = ? AND competencia = ? AND tipo_process = 11",
                     (cod_emp, competencia_fmt)
                 )
                 observacao = f"R$ {val:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
