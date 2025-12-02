@@ -17,10 +17,18 @@ def get_pg_conn():
 def get_empresas():
     conn = get_odbc_conn()
     cursor = conn.cursor()
-    cursor.execute("SELECT CODIGO, NOME FROM bethadba.PRVCLIENTES ORDER BY NOME")
+    cursor.execute("SELECT CODIGO, APELIDO FROM bethadba.PRVCLIENTES ORDER BY NOME")
     empresas = cursor.fetchall()
     conn.close()
     return empresas
+
+def get_nome(cod_emp):
+    conn = get_odbc_conn()
+    cursor = conn.cursor()
+    cursor.execute("SELECT APELIDO FROM bethadba.PRVCLIENTES WHERE CODIGO = ?",(cod_emp))
+    nome = cursor.fetchall()
+    conn.close()
+    return nome
 
 def get_checklist(cod_emp, competencia):
     conn = get_pg_conn()
@@ -72,7 +80,7 @@ def get_checklist(cod_emp, competencia):
 
             if cod == 10:
                 val = get_val(
-                    "SELECT total_guia FROM bethadba.foguiainss WHERE codi_emp = ? AND competencia = ? AND tipo_process = 11",
+                    "SELECT SUM(total_guia) FROM bethadba.foguiainss WHERE codi_emp = ? AND competencia = ? AND tipo_process = 11",
                     (cod_emp, competencia_fmt)
                 )
                 observacao = f"R$ {val:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
@@ -126,6 +134,12 @@ def get_checklist(cod_emp, competencia):
                     (cod_emp, competencia_fmt)
                 )
                 observacao = f"R$ {val:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+            elif cod == 43:
+                val = get_val(
+                        "SELECT SUM(VALOR_TOTAL) from bethadba.FOENCARGO_SIMPLES_DOMESTICO_EMPREGADOS WHERE CODI_EMP = ? AND COMPETENCIA >= ?",
+                    (cod_emp, competencia_fmt)
+                )
+                observacao = f"R$ {val:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")                
 
             elif cod == 47:
                 # operação 47 = 10 + 11 + 46 − 15
@@ -147,7 +161,22 @@ def get_checklist(cod_emp, competencia):
                     "WHERE CODI_EMP = ? AND data_sim = ? AND codi_imp = 26",
                     (cod_emp, competencia_fmt)
                 )
-                total = val10 + val11 + val46 - val15
+                crf = get_val(
+                    "SELECT sdev_sim FROM bethadba.efsdoimp "
+                    "WHERE CODI_EMP = ? AND data_sim = ? AND codi_imp = 25",
+                    (cod_emp, competencia_fmt)
+                )
+                funrural = get_val(
+                    "SELECT sdev_sim FROM bethadba.efsdoimp "
+                    "WHERE CODI_EMP = ? AND data_sim = ? AND codi_imp = 28",
+                    (cod_emp, competencia_fmt)
+                )
+                irrf_alugueis = get_val(
+                    "SELECT sdev_sim FROM bethadba.efsdoimp "
+                    "WHERE CODI_EMP = ? AND data_sim = ? AND codi_imp = 63",
+                    (cod_emp, competencia_fmt)
+                )
+                total = val10 + val11 + val46 - val15 + crf + funrural + irrf_alugueis
                 observacao = f"R$ {total:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
         checklist.append({
