@@ -130,7 +130,7 @@ def get_checklist(cod_emp, competencia):
             elif cod == 47:
                 # operação 47 = 10 + 11 + 46 − 15
                 val10 = get_val(
-                    "SELECT total_guia FROM bethadba.foguiainss WHERE codi_emp = ? AND competencia = ?",
+                    "SELECT total_guia FROM bethadba.foguiainss WHERE codi_emp = ? AND competencia = ? AND tipo_process = 11",
                     (cod_emp, competencia_fmt)
                 )
                 val11 = get_val(
